@@ -17,15 +17,15 @@ Al entrar a se ve una página web con una temática sobre revistas, historias de
 
 SPIP es un software libre de origen francés tipo sistema de gestión de contenidos destinado a la producción de sitios web, orientado a revistas colaborativas en línea e inspirado en los roles de una redacción. Es principalmente utilizado en Francia, en sitios de prensa, en sitios de asociaciones sociales y políticas.
 
-![](/images/Paso.002.png)
+![](images/Paso.002.png)
 
 En dicha página web no se logra sacar nada de utilidad mas allá de SPIP, el codigo de fuente se ve en orden y la mayoría de links dentro de la página no sirven o llevan a paginas caídas o reales que no se ve que tengan que ver con la maquina.
 
 Al utilizar Gobuster se logra descubrir un directorio llamado /spip el cual lleva a una página web de SPIP.
 
-![](/images/Paso.003.png)
+![](images/Paso.003.png)
 
-![](/images/Paso.004.png)
+![](images/Paso.004.png)
 
 
 
@@ -33,7 +33,7 @@ Al utilizar Gobuster se logra descubrir un directorio llamado /spip el cual llev
 
 A partir de ahí solo lleva a más publicaciones y artículos sin mucha información de utilidad, al utilizar wappalyzer para ver las tecnologías que utiliza la página web, se puede ver la versión que utiliza SPIP.
 
-![](/images/Paso.005.png)
+![](images/Paso.005.png)
 
 Al buscar la versión en internet se encuentra un exploit para dicha versión de SPIP 4.2.0 relacionada a RCE o ejecución remota de codigo (CVE:
 2023-27372), dicho exploit se encuentra en metasploit asi que ahorramos tiempo preparando el exploit al simplemente utilizar la automatización de metasploit.
@@ -42,13 +42,13 @@ Esta vulnerabilidad se debe a un fallo en la forma en que SPIP maneja la seriali
 
 Esto permite a un atacante remoto y sin necesidad de autenticación ejecutar código en el servidor (RCE), con los mismos permisos que el proceso del servidor web, en la mayoría de los casos, esto significa control total del sitio web y, potencialmente, acceso a otros sistemas si hay configuraciones inseguras.
 
-![](/images/Paso.006.png)
+![](images/Paso.006.png)
 
 El exploit funciono con total normalidad y logrando estar dentro de la maquina lo que permite viajar a la mayoría de directorios y archivos, asi obteniendo la flag del usuario, ahora solo falta encontrar la manera de escalar privilegios y acceder al directorio root que es donde se encuentra la flag que hace falta para completar la máquina.
 
 Antes de seguir con la escalada de privilegios, en la sesión de metapreter se tiene acceso al directorio .ssh del usuario “think” y al contenido que se encuentra dentro, de esta manera se copia el contenido del archivo id\_rsa o la llave privada del usuario a la maquina local atacante para poder acceder al servicio ssh encontrado al principio como el usuario think sin necesidad de una contraseña. 
 
-![](/images/Paso.007.png)
+![](images/Paso.007.png)
 
 
 **Post-Explotacion y escalada de privilegios**
@@ -57,14 +57,14 @@ Ya dentro de ssh solo falta encontrar la manera de escalar privilegios, el usuar
 
 Al buscar en el sistema por binarios o ejecutables que permitan escalar de privilegios se encontro uno interesante y inusual llamado run\_container, al ejecutarlo aparece un menú sobre contenedores de Docker y la creacion y manejo de estos.
 
-![](/images/Paso.008.png)
+![](images/Paso.008.png)
 
-![](/images/Paso.009.png)
+![](images/Paso.009.png)
 
 
 Al utilizar el comando strings en run\_container encontramos un .sh con el mismo nombre, el comando strings es para inspeccionar el binario y detectar referencias a archivos o comandos internos, lo que permitió descubrir la existencia del script /opt/run\_container.sh.
 
-![](/images/Paso.010.png)
+![](images/Paso.010.png)
 
 -rwxrwxrwx 1 root root 25 Jun 7 20:10 /opt/run\_container.sh
 
@@ -95,7 +95,7 @@ find / -type d -perm -002 2>/dev/nullfind / -type d -perm -002 2>/dev/null
 
 O simplemente se inspecciono directorios típicos para archivos temporales, y asi se logro encontrar /dev/shm, que es un sistema de archivos temporal en memoria con permisos:
 
-![](/images/Paso.011.png)
+![](images/Paso.011.png)
 
 Al probar que efectivamente se podian crear archivos y modificarlos se decidio crear uno llamado shell.sh con el siguiente contenido 
 
@@ -113,6 +113,6 @@ Esto permitió obtener una shell bash más potente, sin las limitaciones de ash,
 
 Al cambiar el codigo por uno que obtiene una shell root y luego ejecutarlo, cambio la shell por una root, con esto hecho finalmente se logro el acceso al directorio root y a la flag en ella permitiéndo completar la máquina.
 
-![](/images/Paso.012.png)
+![](images/Paso.012.png)
 
-![](/images/Paso.013.png)
+![](images/Paso.013.png)
