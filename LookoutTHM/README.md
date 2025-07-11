@@ -10,7 +10,6 @@ Este repositorio documenta el proceso realizado para completar la máquina **Loo
 ## Información general
 
 - **Dificultad:** Fácil  
-- **Plataforma:** TryHackMe  
 
 ---
 
