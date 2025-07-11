@@ -11,7 +11,7 @@ Puerto 22: SSH
 Puerto 80: HTTP
 
 
-![](/images/Paso.001.png)
+![](PublisherTHM.md/images/Paso.001.png)
 
 Al entrar a se ve una página web con una temática sobre revistas, historias de éxito, tutoriales y opiniones sobre spip. 
 
