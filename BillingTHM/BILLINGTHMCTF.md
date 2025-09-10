@@ -111,7 +111,7 @@ donde se creara un txt con el mismo nombre y permisos para poder leerlo
 
 Luego de eso se ejecuta el siguiente comando para banear una ip
 
-sudo /usr/bin/fail2ban-client set sshd banip 127.0.0.1
+sudo /usr/bin/fail2ban-client set sshd banip 8.8.8.8
 
 ![](images/Paso11.png)
 
